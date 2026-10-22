@@ -1,4 +1,5 @@
 Smart Permissions & ACL Agent
+
 Natural-language permission planning and access-control analysis for Windows and Linux
 Project status: Windows plan-only prototype implemented and demonstrated; Linux ACL parsing and mock-based planner tests implemented, with real Ubuntu/WSL testing and main-application integration still pending.
 
@@ -57,7 +58,9 @@ Natural-language request
           v
       JSON plan report
   PLAN_ONLY / no changes applied
+
 Windows-only optional diagnostic modules can add current-token, SID, native ACL, or policy-gap information. They do not replace a complete account-specific authorization check.
+
 Project layout
 The main project modules developed to date include:
 SmartPermissionsAgent/
@@ -92,13 +95,16 @@ SmartPermissionsAgent/
     ├── test_evaluation.py
     ├── test_windows_*.py
     └── test_linux_*.py
+
 The list reflects the modules developed during this project; confirm the actual repository contents before publishing. Wildcard names above denote groups of test files, not files literally named with *.
+
 Requirements
 - Python 3 (development and reported Windows tests used Python 3.14.7).
 - pytest for automated testing.
 - Windows 11 for icacls inspection and optional Windows security modules.
 - pywin32 for optional native Windows security inspection and SID-based functionality; it is Windows-only.
 - Ubuntu/Linux, getfacl, and Python for the Linux backend; real Linux verification is pending.
+
 On Windows PowerShell:
 cd "C:\path\to\SmartPermissionsAgent"
 py -m venv .venv
@@ -109,6 +115,7 @@ If you use optional Windows security modules and pywin32 is not installed:
 python -m pip install pywin32
 Keep Windows-only dependencies conditional in requirements.txt when installing the same project on Linux (for example, pywin32; platform_system == "Windows").
 Run the application on Windows
+
 Start the interactive CLI:
 python main.py
 Create a disposable test directory if needed:
@@ -147,6 +154,7 @@ Run Linux ACL unit and mocked integration tests on Windows:
 python -m pytest tests/test_linux_acl_analysis.py tests/test_linux_planner_integration.py -v
 Run the evaluation runner:
 python run_evaluation.py
+
 Reported results (not a final consolidated benchmark)
 - An earlier full regression run reported 46 passed; later modules added more tests, so do not treat 46 as the final suite total.
 - An earlier mock-based evaluation reported 8 passed, 0 failed (100% within those eight scenarios).
@@ -154,6 +162,8 @@ Reported results (not a final consolidated benchmark)
 - A mocked Linux planner integration test had a sample-count assertion (6 versus the actual 5 entries); the correction was provided, but a final corrected result was not supplied here.
 - Windows ACL inspection was exercised on an existing temporary directory, and the planner reported no ACL modifications.
 Before submitting the project, rerun the full suite and the evaluation runner, save the latest terminal summaries, and update this section with only confirmed results. Pytest suite duration is not a per-request latency benchmark; intent accuracy and average time-to-plan have not yet been separately measured.
+
+
 Linux support — implemented versus remaining
 The Linux analyzer currently supports parsing representative getfacl output, distinguishing access versus default ACL entries, applying visible ACL masks to affected entries, and flagging potential write access. A platform-specific Linux planner is present, but the main engine intentionally blocks Linux requests until real Linux tests validate it.
 Test inside Ubuntu/WSL (still to be completed)
@@ -177,6 +187,8 @@ Test inside Ubuntu/WSL (still to be completed)
    python -m pytest tests/test_linux_real_integration.py -v
 8. Only after successful real Linux validation: safely enable Linux plan-only routing through permission_agent/engine.py, then test Linux requests through main.py.
 None of these steps requires applying the generated permission commands to a real folder.
+
+
 Limitations and security model
 - This is a rule-based, supported-intent prototype, not a general-purpose LLM command executor.
 - No proposed permission-changing command is executed.
@@ -186,6 +198,8 @@ Limitations and security model
 - Linux mask analysis and default ACL inspection do not fully establish access for arbitrary users, parent directory traversal, or child objects.
 - Privileged Windows principals (including SYSTEM and Administrators) must not be automatically removed or denied access; exceptions require explicit policy design and review.
 - Do not run proposed icacls, chmod, chown, or setfacl commands against important directories without separate verification, authorization, and recovery procedures.
+
+
 Remaining work / roadmap
 - [ ] Verify all optional native Windows security modules on an actual test directory.
 - [ ] Confirm a passing consolidated Windows and Linux mock-based regression suite.
@@ -195,11 +209,5 @@ Remaining work / roadmap
 - [ ] Finalize policy exceptions and authorization requirements for comprehensive read-only policy verification (separate from this prototype).
 - [ ] Capture genuine Windows/Linux screenshots, update test results, and complete the academic report.
 - [ ] Publish the latest verified source and documentation on GitHub.
-GitHub updates
-After initializing Git and linking your repository, upload changes using:
-git add .
-git commit -m "Update Smart Permissions ACL Agent"
-git push
-Check git status and staged files before pushing. Exclude virtual environments, credentials, and private files with .gitignore.
-Disclaimer
+
 Educational/research prototype. Use only on directories you own or are authorized to inspect. No real permission modifications are performed by the current application. The generated commands and ACL assessments are advisory and require independent verification before use in production.
