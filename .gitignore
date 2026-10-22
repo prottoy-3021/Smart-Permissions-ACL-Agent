@@ -1,0 +1,44 @@
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Environment variables and credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# IDE and editor
+.vscode/
+.idea/
+
+# Operating system generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files and backups
+*.tmp
+*.log
+*.bak
+*.swp
+*~
+
+# Local-only artifacts
+dist/
+build/
+*.egg-info/

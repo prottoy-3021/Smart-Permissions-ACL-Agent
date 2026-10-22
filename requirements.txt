@@ -1,0 +1,2 @@
+pytest
+pywin32>=312; platform_system == "Windows"

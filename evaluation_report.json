@@ -1,0 +1,52 @@
+{
+    "project": "Smart Permissions & ACL Agent",
+    "generated_at": "2026-10-22T01:18:53.512789+05:30",
+    "evaluation_type": "Automated tests using mocked scenarios",
+    "real_permissions_changed": false,
+    "summary": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0,
+        "pass_rate_percent": 100.0
+    },
+    "results": [
+        {
+            "test": "tests/test_evaluation.py::test_evaluation_blocks_unverified_windows_request",
+            "status": "PASSED"
+        },
+        {
+            "test": "tests/test_evaluation.py::test_evaluation_blocks_linux_request",
+            "status": "PASSED"
+        },
+        {
+            "test": "tests/test_evaluation.py::test_evaluation_blocks_apply_mode",
+            "status": "PASSED"
+        },
+        {
+            "test": "tests/test_evaluation.py::test_evaluation_rejects_invalid_request",
+            "status": "PASSED"
+        },
+        {
+            "test": "tests/test_evaluation.py::test_web_server_request_contains_read_execute_policy",
+            "status": "PASSED"
+        },
+        {
+            "test": "tests/test_evaluation.py::test_web_server_request_does_not_claim_verification",
+            "status": "PASSED"
+        },
+        {
+            "test": "tests/test_evaluation.py::test_invalid_request_is_rejected_before_planning",
+            "status": "PASSED"
+        },
+        {
+            "test": "tests/test_evaluation.py::test_apply_mode_never_calls_planner",
+            "status": "PASSED"
+        }
+    ],
+    "pytest_exit_code": 0,
+    "limitations": [
+        "Mocked tests do not establish real Windows effective access.",
+        "The evaluation does not authorize permission changes."
+    ]
+}
